@@ -1,0 +1,86 @@
+version: "3.9"
+
+services:
+  alfa:
+    container_name: alfa
+    network_mode: host
+    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.334
+    environment:
+      - DB_NAME=alfa_db
+      - DB_USER=alfa_user
+      - DB_PASSWORD=database_password
+      - DB_HOST=127.0.0.1
+      - DB_PORT=5432
+      - ERP_HTTP_ADDRESS=erp_address
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=alfa_django_pass
+      - DJANGO_SUPERUSER_EMAIL=alfa_superuser_email
+      - REDIS_HOST=127.0.0.1
+      - REDIS_PORT=6379
+      - TZ=Europe/Warsaw
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    container_name: postgres
+    network_mode: host
+    image: postgres
+    environment:
+      - POSTGRES_DB=alfa_db
+      - POSTGRES_USER=alfa_user
+      - POSTGRES_PASSWORD=database_password
+      - TZ=Europe/Warsaw
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+
+  redis:
+    container_name: redis
+    network_mode: host
+    image: redis:alpine
+    environment:
+      - TZ=Europe/Warsaw
+
+  celery-worker:
+    network_mode: host
+    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.334
+    environment:
+      - DB_NAME=alfa_db
+      - DB_USER=alfa_user
+      - DB_PASSWORD=database_password
+      - DB_HOST=127.0.0.1
+      - DB_PORT=5432
+      - ERP_HTTP_ADDRESS=erp_address
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=alfa_django_pass
+      - DJANGO_SUPERUSER_EMAIL=alfa_superuser_email
+      - REDIS_HOST=127.0.0.1
+      - REDIS_PORT=6379
+      - TZ=Europe/Warsaw
+      - CELERY_BROKER=redis://127.0.0.1:6379/0
+    entrypoint: ['celery','-A','alfa','worker','-l','info']
+    depends_on:
+      - postgres
+      - redis
+
+  celery-beat:
+    network_mode: host
+    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.334
+    environment:
+      - DB_NAME=alfa_db
+      - DB_USER=alfa_user
+      - DB_PASSWORD=database_password
+      - DB_HOST=127.0.0.1
+      - DB_PORT=5432
+      - ERP_HTTP_ADDRESS=erp_address
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=alfa_django_pass
+      - DJANGO_SUPERUSER_EMAIL=alfa_superuser_email
+      - REDIS_HOST=127.0.0.1
+      - REDIS_PORT=6379
+      - TZ=Europe/Warsaw
+      - CELERY_BROKER=redis://127.0.0.1:6379/0
+    entrypoint: ['celery','-A','alfa','beat','-l','info']
+    depends_on:
+      - postgres
+      - redis

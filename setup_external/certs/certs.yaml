@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  certbot:
+    image: goacme/lego
+    command: --accept-tos --email dummy@email.com --domains=replaceme.com --http run
+    environment:
+      LEGO_PATH: /data
+    volumes:
+      - ./data:/data
+    ports:
+      - 0.0.0.0:80:80
