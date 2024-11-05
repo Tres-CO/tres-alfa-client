@@ -1,6 +1,6 @@
 # Trawers 7 ERP Cloud (Alfa)
 
-**Tawers 7 ERP Cloud (zwaną dalej pod nazwą roboczą Alfa) ** to nowy produkt z rodziny Trawers umożliwiający interakcję z usługami Trawersa ERP z chmury bądź sieci lokalnej poprzez interfejs WEBowy:
+**Tawers 7 ERP Cloud (zwaną dalej pod nazwą roboczą Alfa)** to nowy produkt z rodziny Trawers umożliwiający interakcję z usługami Trawersa ERP z chmury bądź sieci lokalnej poprzez interfejs WEBowy:
 
 <p align="center">
   <img src="images/overview.png" />
