@@ -93,7 +93,7 @@ services:
       - REDIS_PORT=6379
       - TZ=Europe/Warsaw
       - CELERY_BROKER=redis://redis:6379/0
-    entrypoint: ['celery','-A','alfa','beat','-l','info']
+    entrypoint: ['celery','-A','alfa','beat','-l','info','--max-interval','4000']
     depends_on:
       - postgres
       - redis
