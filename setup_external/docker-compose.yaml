@@ -35,6 +35,8 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - TZ=Europe/Warsaw
+    volumes:
+      - trreports_volume:/alfa/trreport/reports
     depends_on:
       - postgres
       - redis
@@ -73,6 +75,8 @@ services:
       - TZ=Europe/Warsaw
       - CELERY_BROKER=redis://redis:6379/0
     entrypoint: ['celery','-A','alfa','worker','-l','info']
+    volumes:
+      - trreports_volume:/alfa/trreport/reports
     depends_on:
       - postgres
       - redis
@@ -94,6 +98,8 @@ services:
       - TZ=Europe/Warsaw
       - CELERY_BROKER=redis://redis:6379/0
     entrypoint: ['celery','-A','alfa','beat','-l','info','--max-interval','4000']
+    volumes:
+      - trreports_volume:/alfa/trreport/reports
     depends_on:
       - postgres
       - redis
@@ -103,3 +109,6 @@ services:
     volumes:
       - ./soa_key:/soa_key
     command: ssh -v -o StrictHostKeyChecking=no -L 0.0.0.0:7000:192.168.0.12:7000 -i /soa_key -p 22 user@10.20.30.40  -- sleep infinity
+
+volumes:
+    trreports_volume:
