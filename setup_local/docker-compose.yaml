@@ -4,7 +4,7 @@ services:
   alfa:
     container_name: alfa
     network_mode: host
-    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.401
+    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.404
     environment:
       - DB_NAME=alfa_db
       - DB_USER=alfa_user
@@ -43,7 +43,7 @@ services:
 
   celery-worker:
     network_mode: host
-    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.401
+    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.404
     environment:
       - DB_NAME=alfa_db
       - DB_USER=alfa_user
@@ -65,7 +65,7 @@ services:
 
   celery-beat:
     network_mode: host
-    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.401
+    image: harbor.cloud.tres.pl/tres-co/alfa:0.1.404
     environment:
       - DB_NAME=alfa_db
       - DB_USER=alfa_user
